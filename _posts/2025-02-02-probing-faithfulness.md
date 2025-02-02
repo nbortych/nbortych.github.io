@@ -99,4 +99,4 @@ The code for this project is available at [GitHub repository link](https://githu
 
 ## Acknowledgments
 
-This research was conducted as part of the AI Alignment Fundamentals Course. I'm grateful to the whole BlueDot Team for organizing it and to everyone I've got to work with and discuss AI alignment over the past couple of months.
+This research was conducted as part of the AI Alignment Fundamentals Course. I'm grateful to the whole BlueDot Impact Team for organizing it and to everyone I've got to work with and discuss AI alignment over the past couple of months.
