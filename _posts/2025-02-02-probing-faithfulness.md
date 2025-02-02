@@ -1,9 +1,10 @@
-# Hidden Patterns in Language Models' Reasoning: Using Linear Probes to Detect Chain-of-Thought Faithfulness
+# Probing Faithfulness: Using Linear Probes to Detect CoT Faithfulness
 
-In my research on language model behavior, I've been investigating a crucial question: when models show their reasoning through chain-of-thought prompting, are they actually using that reasoning to reach their conclusions? This investigation led me to develop a novel approach using linear probes to detect whether a model's stated reasoning aligns with its internal processing.
+In my research on language model behavior, I've been investigating a crucial question: when models show their reasoning through chain-of-thought prompting, are they actually using that reasoning to reach their conclusions? Inspired by [work on sleeper detection](https://www.anthropic.com/research/probes-catch-sleeper-agents) I attempt whether we can use linear probes to detect if the model is unfaithful. 
 
 ## The Problem: Unfaithful Reasoning
 
+Faithfulnes is when models internal "thoughts" match the external outputs. It means that its reasoning in the output space is "authentic". The previous steps in logic need to be causally responsible for the the next steps, it needs to be complete and straightforward.
 Language models can exhibit several types of unfaithful reasoning:
 
 1. Generating a predetermined answer and constructing post-hoc justification
@@ -11,17 +12,20 @@ Language models can exhibit several types of unfaithful reasoning:
 3. Performing hidden computations that diverge from stated reasoning
 4. Using reasoning as window dressing for conclusions reached through other means
 
-Through my experiments, I found that detecting these behaviors is more complex than it might initially appear, but also more tractable than one might expect.
+This research will focus on the type of unfaithfulness where the CoT is not causally influencing the output.
 
-## Why This Matters for AI Safety
+## Why Faithfulness Matters for AI Safety
 
 The ability to detect unfaithful reasoning has profound implications for AI safety. Consider a high-stakes scenario where an AI system provides reasoning for a critical decision - perhaps in healthcare or infrastructure. If the system's stated reasoning doesn't reflect its actual decision-making process, our ability to oversee and verify its behavior becomes severely compromised.
+Additionally, with the proliferation of the test-time compute methods, there will be more and more reliance on the CoT of the models. It is important that we can detect whether the outputs of this CoT is unfaithful. 
+In some sense, if we can guarantee that the output of the models are faithful, it would make alignment problem much easier, since we could increase the probability that we can take the outputs of the model at face value and concentrate on looking for unintended side effects or simply ask the AI if it is planning to do something harmful.
 
-My research suggests three key implications:
+Detecting faithful reasoning can help in three key areas:
 
 1. **Safety Monitoring**: Unfaithful reasoning detection could serve as an early warning system for potential safety issues.
 2. **Alignment Verification**: This technique provides a way to verify that models are actually using the reasoning processes they claim to use.
 3. **Deception Detection**: The method might help identify cases where models learn to provide plausible-sounding but ultimately misleading explanations.
+
 
 ## The Approach: Probing the Model's Mind
 
@@ -54,8 +58,10 @@ The probe's confidence distribution shows clear separation between faithful and 
 While these results are promising, several important limitations should be noted:
 
 1. The experiments used a relatively small language model (1.5B parameters)
-2. The binary faithful/unfaithful classification might miss nuanced forms of reasoning
-3. The current approach requires access to model internals
+2. The experiments used a subset of one dataset (elementary_mathematics subset of MMLU)
+3. Early Answering Faithfulnes measure was simplified for computational reasons.
+4. It was focusing only on one aspect of faithfulness.
+5. Very simple linear probe was used only on the last token of the response. 
 
 Looking ahead, I see several promising directions for future research:
 
